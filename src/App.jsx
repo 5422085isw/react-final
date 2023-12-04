@@ -63,17 +63,10 @@ export default function App() {
     };
 
     const handleSubweaponChange = (selectedWeapon) => {
-        // 選択された武器の金額を取得
         const selectedWeaponPrice = weaponPrices[selectedWeapon] || 0;
-
-        // 現在のサブウェポンの金額を元に戻す
         const currentSubweaponPrice = weaponPrices[subweapon] || 0;
         setMoney((prevMoney) => prevMoney + currentSubweaponPrice);
-
-        // 新しいサブウェポンの金額を減算
         setMoney((prevMoney) => prevMoney - selectedWeaponPrice);
-
-        // サブウェポンを更新
         setsubweapon(selectedWeapon);
     };
 
@@ -116,9 +109,9 @@ export default function App() {
         const nowKillCount = document.getElementById("nowRoundKill").value;
         setkillCount(parseInt(nowKillCount, 10));
         if (alive) {
-            count += roundWin ? 3000 : 800;
+            count += roundWin ? 3000 : 1000;
         } else {
-            count += roundWin ? 3000 : 1100;
+            count += roundWin ? 3000 : 1900;
             setsubweapon("crassic");
             setmainweapon("");
             setArmor("");
@@ -126,7 +119,9 @@ export default function App() {
         if (roundWin) {
             setWinRoundCount((winRoundCount) => winRoundCount + 1);
         } else {
-            count += defeatCount * 200;
+            if(1 < defeatCount < 3){
+                count += defeatCount * 500;
+            }
             if (defeatCount < 3) {
                 setDefeatCount((defeatCount) => defeatCount + 1);
             }
@@ -134,7 +129,7 @@ export default function App() {
         }
         count += parseInt(nowKillCount, 10) * 200;
         if (spike) {
-            count += 150;
+            count += 300;
         }
         setMoney((prevMoney) => prevMoney + count);
         setroundCount((prevRoundCount) => prevRoundCount + 1);
